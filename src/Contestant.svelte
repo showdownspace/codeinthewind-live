@@ -1,19 +1,35 @@
 <script lang="ts">
-  import { contestantSubmission } from './store'
+  import { contestantSubmission, Submission } from './store'
   export let uid: string
+  let iframe: HTMLIFrameElement
   $: submissionStore = contestantSubmission(uid)
-  $: submission = $submissionStore
-  $: srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8">
+
+  const srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8">
 <base href="https://codeinthewind-editor.showdown.space/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>${submission?.compiledCss}</${''}style>
+<${''}style id="cssstyle">.bg-white{background:white}</${''}style>
 <${''}/head>
-<body>${submission?.html || '(Loading...)'}<${''}/body>
+<body class="bg-white">(Loading...)<${''}/body>
 <${''}/html>`
+
+  function onload() {
+    inject($submissionStore)
+  }
+  function inject(submission: Submission) {
+    if (iframe && submission) {
+      iframe.contentDocument.body.innerHTML = submission.html
+      iframe.contentDocument.querySelector('#cssstyle').innerHTML =
+        submission.compiledCss
+    }
+  }
+
+  $: inject($submissionStore)
 </script>
 
 <div class="relative">
   <iframe
+    bind:this={iframe}
+    on:load={onload}
     sandbox="allow-same-origin"
     {srcdoc}
     class="w-[540px] h-[720px]"
