@@ -26,24 +26,26 @@
   $: inject($submissionStore)
 </script>
 
-<div class="contestant" on:click>
-  <iframe
-    bind:this={iframe}
-    on:load={onload}
-    sandbox="allow-same-origin"
-    {srcdoc}
-    class="w-full h-full pointer-events-none select-none"
-    title="Preview"
-  />
-  <div class="absolute bottom-0 left-0 bg-sky-700 px-3 py-2">
-    {uid}
+<div
+  class="fixed z-10 inset-0 overflow-y-auto"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+  on:click
+>
+  <div class="bg-sky-900 p-8 w-full h-full">
+    <h1 class="text-3xl">Spectating Contestant <code>#{uid}</code></h1>
+
+    <div class="flex justify-center mt-4 gap-4 p-8">
+      <div class="bg-black p-8 w-3/4"><pre>{$submissionStore.html}</pre></div>
+      <iframe
+        bind:this={iframe}
+        on:load={onload}
+        sandbox="allow-same-origin"
+        {srcdoc}
+        class="w-[540px] h-[720px] pointer-events-none select-none"
+        title="Preview"
+      />
+    </div>
   </div>
 </div>
-
-<style lang="postcss">
-  .contestant {
-    @apply relative;
-    aspect-ratio: 3 / 4;
-    scale: 2;
-  }
-</style>

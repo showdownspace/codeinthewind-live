@@ -1,10 +1,21 @@
 <script lang="ts">
   import Contestant from './Contestant.svelte'
+  import Modal from './Modal.svelte'
   import { stage } from './store'
 
   let uids: string[]
+  let modalUid: string | false = false
+
   $: {
     uids = $stage || []
+  }
+
+  function displayContestantModal(uid) {
+    modalUid = uid
+  }
+
+  function closeModal() {
+    modalUid = false
   }
 </script>
 
@@ -14,13 +25,13 @@ Number of users on stage: {uids.length}
   <div class="template-image">
     <img
       src="https://cdn.discordapp.com/attachments/969252015341449256/969296584800104468/unknown.png"
-      alt="Template Image"
+      alt="Template"
     />
   </div>
 
   {#each uids as uid}
     <div>
-      <Contestant {uid} />
+      <Contestant {uid} on:click={() => displayContestantModal(uid)} />
     </div>
   {/each}
 
@@ -29,6 +40,11 @@ Number of users on stage: {uids.length}
   <div class="flex items-center justify-center border">(No Player)</div>
   <div class="flex items-center justify-center border">(No Player)</div>
 </div>
+
+<!-- Modal -->
+{#if modalUid}
+  <Modal uid={modalUid} on:click={closeModal} />
+{/if}
 
 <style>
   .grid-view {
