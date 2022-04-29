@@ -26,16 +26,24 @@
   $: inject($submissionStore)
 </script>
 
-<div class="relative">
+<div class="contestant">
   <iframe
     bind:this={iframe}
     on:load={onload}
     sandbox="allow-same-origin"
     {srcdoc}
-    class="w-[540px] h-[720px]"
+    class="w-full h-full"
     title="Preview"
   />
   <div class="absolute bottom-0 left-0 bg-sky-700 px-3 py-2">
     {uid}
   </div>
 </div>
+
+<style lang="postcss">
+  .contestant {
+    @apply relative;
+    aspect-ratio: 3 / 4;
+    scale: 2;
+  }
+</style>
