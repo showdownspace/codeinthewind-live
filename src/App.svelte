@@ -2,13 +2,8 @@
   import Contestant from './Contestant.svelte'
   import Modal from './Modal.svelte'
   import { stage } from './store'
-
-  let uids: string[]
   let modalUid: string | false = false
-
-  $: {
-    uids = $stage || []
-  }
+  $: uids = $stage || []
 
   function displayContestantModal(uid) {
     modalUid = uid

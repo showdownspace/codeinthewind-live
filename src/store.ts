@@ -73,3 +73,28 @@ export const contestantSubmission = memoize((uid: string) => {
     undefined,
   )
 })
+
+type Presence = 'online' | 'offline'
+
+export const contestantPresence = memoize(
+  (uid: string): SvelteStore<Presence> => {
+    const presenceRef = child(roomRef, `presence/${uid}`)
+    let lastTime = 0
+    return {
+      subscribe: (set) => {
+        const update = () => {
+          set(new Date().getTime() < lastTime + 60000 ? 'online' : 'offline')
+        }
+        update()
+        const unsubscribe = onValue(presenceRef, (snapshot) => {
+          lastTime = +snapshot.val() || 0
+        })
+        const interval = setInterval(update, 3000)
+        return () => {
+          unsubscribe()
+          clearInterval(interval)
+        }
+      },
+    }
+  },
+)

@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { contestantSubmission, Submission } from './store'
+  import { contestantPresence, contestantSubmission, Submission } from './store'
   export let uid: string
   let iframe: HTMLIFrameElement
   $: submissionStore = contestantSubmission(uid)
+  $: presenceStore = contestantPresence(uid)
 
   const srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8">
 <base href="https://codeinthewind-editor.showdown.space/">
@@ -36,7 +37,7 @@
     title="Preview"
   />
   <div class="absolute bottom-0 left-0 bg-sky-700 px-3 py-2">
-    {uid}
+    [{$presenceStore}] {uid}
   </div>
 </div>
 
