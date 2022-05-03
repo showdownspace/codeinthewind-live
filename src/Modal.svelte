@@ -1,5 +1,6 @@
 <script lang="ts">
   import { contestantSubmission, Submission } from './store'
+  import Prism from 'prismjs'
   export let uid: string
   export let index: number
   let iframe: HTMLIFrameElement
@@ -40,7 +41,15 @@
     <div class="flex justify-center mt-4 gap-4 p-8">
       <div class="bg-black flex-auto relative">
         <div class="absolute inset-0 overflow-auto p-8">
-          <pre wrap="wrap">{$submissionStore.html}</pre>
+          <pre wrap="wrap">{@html Prism.highlight(
+              $submissionStore.html,
+              Prism.languages.html,
+            )}</pre>
+          <div class="h-px bg-gray-700 my-12" />
+          <pre wrap="wrap">{@html Prism.highlight(
+              $submissionStore.css,
+              Prism.languages.css,
+            )}</pre>
         </div>
       </div>
       <iframe
