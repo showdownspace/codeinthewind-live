@@ -18,7 +18,6 @@
   }
 </script>
 
-Number of users on stage: {uids.length}
 <div class="flex items-center justify-center inset-0 absolute">
   <div class="grid-view">
     <div class="template-image">
