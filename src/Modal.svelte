@@ -1,6 +1,7 @@
 <script lang="ts">
   import { contestantSubmission, Submission } from './store'
   export let uid: string
+  export let index: number
   let iframe: HTMLIFrameElement
   $: submissionStore = contestantSubmission(uid)
 
@@ -34,12 +35,12 @@
   on:click
 >
   <div class="bg-sky-900 p-8 w-full h-full">
-    <h1 class="text-3xl">Spectating Contestant <code>#{uid}</code></h1>
+    <h1 class="text-3xl">Spectating Contestant <code>#{index + 1}</code></h1>
 
     <div class="flex justify-center mt-4 gap-4 p-8">
       <div class="bg-black flex-auto relative">
         <div class="absolute inset-0 overflow-auto p-8">
-          <pre wrap>{$submissionStore.html}</pre>
+          <pre wrap="wrap">{$submissionStore.html}</pre>
         </div>
       </div>
       <iframe

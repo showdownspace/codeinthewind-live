@@ -2,15 +2,19 @@
   import Contestant from './Contestant.svelte'
   import Modal from './Modal.svelte'
   import { stage } from './store'
-  let modalUid: string | false = false
+  let modalData: { uid: string; index: number } | null = null
   $: uids = $stage || []
 
-  function displayContestantModal(uid) {
-    modalUid = uid
+  function displayContestantModal(uid: string, index: number) {
+    modalData = { uid, index }
   }
 
   function closeModal() {
-    modalUid = false
+    modalData = null
+  }
+
+  function rest(a: unknown[]) {
+    return new Array(8 - a.length).fill('')
   }
 </script>
 
@@ -24,22 +28,28 @@ Number of users on stage: {uids.length}
       />
     </div>
 
-    {#each uids as uid}
+    {#each uids as uid, i}
       <div>
-        <Contestant {uid} on:click={() => displayContestantModal(uid)} />
+        <Contestant
+          {uid}
+          index={i}
+          on:click={() => displayContestantModal(uid, i)}
+        />
       </div>
     {/each}
-
-    <div class="flex items-center justify-center border">(No Player)</div>
-    <div class="flex items-center justify-center border">(No Player)</div>
-    <div class="flex items-center justify-center border">(No Player)</div>
-    <div class="flex items-center justify-center border">(No Player)</div>
+    {#each rest(uids) as _unused, i}
+      <div
+        class="flex items-center justify-center rounded text-2xl bg-slate-500 shadow-inner"
+      >
+        (No Player)
+      </div>
+    {/each}
   </div>
 </div>
 
 <!-- Modal -->
-{#if modalUid}
-  <Modal uid={modalUid} on:click={closeModal} />
+{#if modalData}
+  <Modal {...modalData} on:click={closeModal} />
 {/if}
 
 <style>
