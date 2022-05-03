@@ -37,13 +37,17 @@
     <h1 class="text-3xl">Spectating Contestant <code>#{uid}</code></h1>
 
     <div class="flex justify-center mt-4 gap-4 p-8">
-      <div class="bg-black p-8 w-3/4"><pre>{$submissionStore.html}</pre></div>
+      <div class="bg-black flex-auto relative">
+        <div class="absolute inset-0 overflow-auto p-8">
+          <pre wrap>{$submissionStore.html}</pre>
+        </div>
+      </div>
       <iframe
         bind:this={iframe}
         on:load={onload}
         sandbox="allow-same-origin"
         {srcdoc}
-        class="w-[540px] h-[720px] pointer-events-none select-none"
+        class="flex-none w-[540px] h-[720px] pointer-events-none select-none"
         title="Preview"
       />
     </div>

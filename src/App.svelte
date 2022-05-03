@@ -15,25 +15,26 @@
 </script>
 
 Number of users on stage: {uids.length}
-
-<div class="grid-view">
-  <div class="template-image">
-    <img
-      src="https://cdn.discordapp.com/attachments/969252015341449256/969296584800104468/unknown.png"
-      alt="Template"
-    />
-  </div>
-
-  {#each uids as uid}
-    <div>
-      <Contestant {uid} on:click={() => displayContestantModal(uid)} />
+<div class="flex items-center justify-center inset-0 absolute">
+  <div class="grid-view">
+    <div class="template-image">
+      <img
+        src="https://cdn.discordapp.com/attachments/969252015341449256/969296584800104468/unknown.png"
+        alt="Template"
+      />
     </div>
-  {/each}
 
-  <div class="flex items-center justify-center border">(No Player)</div>
-  <div class="flex items-center justify-center border">(No Player)</div>
-  <div class="flex items-center justify-center border">(No Player)</div>
-  <div class="flex items-center justify-center border">(No Player)</div>
+    {#each uids as uid}
+      <div>
+        <Contestant {uid} on:click={() => displayContestantModal(uid)} />
+      </div>
+    {/each}
+
+    <div class="flex items-center justify-center border">(No Player)</div>
+    <div class="flex items-center justify-center border">(No Player)</div>
+    <div class="flex items-center justify-center border">(No Player)</div>
+    <div class="flex items-center justify-center border">(No Player)</div>
+  </div>
 </div>
 
 <!-- Modal -->
@@ -46,8 +47,8 @@ Number of users on stage: {uids.length}
     margin: 1rem;
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: 270px 270px [template-start] 540px [template-end] 270px 270px;
-    grid-template-rows: [template-start] 360px 360px [template-end];
+    grid-template-columns: 264px 264px [template-start] 540px [template-end] 264px 264px;
+    grid-template-rows: [template-start] 352px 352px [template-end];
   }
 
   .template-image {
