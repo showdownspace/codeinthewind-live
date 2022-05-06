@@ -22,7 +22,7 @@
   <div class="grid-view">
     <div class="template-image">
       <img
-        src="https://cdn.discordapp.com/attachments/969252015341449256/969296584800104468/unknown.png"
+        src="https://citw01.pages.dev/example/reference.png"
         alt="Template"
       />
     </div>
