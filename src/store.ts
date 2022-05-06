@@ -56,7 +56,13 @@ export const contestantSubmission = memoize((uid: string) => {
     submissionRef,
     (snapshot) => {
       try {
+        if (!snapshot.val()) {
+          return
+        }
         const data = JSON.parse(String(snapshot.val()))
+        if (!data) {
+          return
+        }
         return {
           html: String(data.html),
           css: String(data.css),

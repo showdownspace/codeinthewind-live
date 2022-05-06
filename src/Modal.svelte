@@ -1,31 +1,12 @@
 <script lang="ts">
-  import { contestantSubmission, Submission } from './store'
+  import { contestantSubmission } from './store'
   import Prism from 'prismjs'
+  import { getIframeDataFromSubmission } from './PreviewIframeContent'
+  import PreviewIframe from './PreviewIframe.svelte'
   export let uid: string
   export let index: number
-  let iframe: HTMLIFrameElement
   $: submissionStore = contestantSubmission(uid)
-
-  const srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8">
-<base href="https://codeinthewind-editor.showdown.space/">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<${''}style id="cssstyle">.bg-white{background:white}</${''}style>
-<${''}/head>
-<body class="bg-white">(Loading...)<${''}/body>
-<${''}/html>`
-
-  function onload() {
-    inject($submissionStore)
-  }
-  function inject(submission: Submission) {
-    if (iframe && submission) {
-      iframe.contentDocument.body.innerHTML = submission.html
-      iframe.contentDocument.querySelector('#cssstyle').innerHTML =
-        submission.compiledCss
-    }
-  }
-
-  $: inject($submissionStore)
+  $: data = getIframeDataFromSubmission($submissionStore)
 </script>
 
 <div
@@ -42,24 +23,21 @@
       <div class="bg-black flex-auto relative">
         <div class="absolute inset-0 overflow-auto p-8">
           <pre wrap="wrap">{@html Prism.highlight(
-              $submissionStore.html,
+              $submissionStore?.html || '(No data received)',
               Prism.languages.html,
             )}</pre>
           <div class="h-px bg-gray-700 my-12" />
           <pre wrap="wrap">{@html Prism.highlight(
-              $submissionStore.css,
+              $submissionStore?.css || '',
               Prism.languages.css,
             )}</pre>
         </div>
       </div>
-      <iframe
-        bind:this={iframe}
-        on:load={onload}
-        sandbox="allow-same-origin"
-        {srcdoc}
-        class="flex-none w-[540px] h-[720px] pointer-events-none select-none"
-        title="Preview"
-      />
+      <div
+        class="flex-none w-[540px] h-[720px] pointer-events-none select-none relative"
+      >
+        <PreviewIframe html={data.html} css={data.css} />
+      </div>
     </div>
   </div>
 </div>
