@@ -7,10 +7,12 @@
   export let uid: string
   export let index: number | undefined = undefined
   let revealName = false
+  let resizing: { lastX: number } | undefined
   const dispatch = createEventDispatcher()
   $: submissionStore = contestantSubmission(uid)
   $: profileStore = contestantProfile(uid)
   $: data = getIframeDataFromSubmission($submissionStore)
+  let width = 540
 
   const toggleName = () => {
     revealName = !revealName
@@ -40,7 +42,7 @@
       <div class="bg-white h-[2px] absolute inset-x-0 top-1/2 -rotate-45" />
     </button>
 
-    <div class="flex justify-center mt-4 gap-4 p-8">
+    <div class="flex justify-center mt-4 p-8">
       <div class="bg-black flex-auto relative">
         <div class="absolute inset-0 overflow-auto p-8">
           <pre wrap="wrap">{@html Prism.highlight(
@@ -55,10 +57,26 @@
         </div>
       </div>
       <div
-        class="flex-none w-[540px] h-[720px] pointer-events-none select-none relative"
+        class="flex-none w-4 cursor-ew-resize {resizing ? 'bg-sky-400' : ''}"
+        on:mousedown={(e) => (resizing = { lastX: e.clientX })}
+      />
+      <div
+        class="flex-none h-[720px] {resizing
+          ? 'pointer-events-none select-none'
+          : ''}  relative"
+        style="width: {width}px"
       >
         <PreviewIframe html={data.html} css={data.css} />
       </div>
     </div>
   </div>
 </div>
+
+<svelte:body
+  on:mousemove={(e) => {
+    if (resizing) {
+      width += resizing.lastX - e.clientX
+      resizing.lastX = e.clientX
+    }
+  }}
+  on:mouseup={() => (resizing = undefined)} />
