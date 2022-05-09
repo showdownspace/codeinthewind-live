@@ -26,6 +26,7 @@
     <div class="grid-view">
       <div class="template-image">
         <img
+          class="shadow-lg rounded"
           src={$refImage}
           alt="Template"
           on:click={() => (viewMode = 'all')}
@@ -43,7 +44,7 @@
       {/each}
       {#each rest(uids) as _unused, i}
         <div
-          class="flex items-center justify-center rounded text-2xl bg-slate-500 shadow-inner"
+          class="flex items-center justify-center rounded text-2xl bg-slate-500 shadow-lg"
         >
           (No Player)
         </div>
@@ -52,9 +53,10 @@
   </div>
   <img src={logotext} alt="" class="absolute top-8 left-8 w-[21.823vw]" />
 {:else}
-  <div class="flex inset-0 absolute p-4 gap-4">
-    <div class="self-center flex-none">
+  <div class="flex inset-0 absolute">
+    <div class="flex-none flex flex-col justify-center p-4 bg-slate-900/50">
       <img
+        class="shadow-lg rounded"
         src={$refImage}
         alt="Template"
         width="540"
@@ -63,7 +65,9 @@
     </div>
     <div class="flex-auto relative">
       <div class="absolute inset-0 flex overflow-x-hidden overflow-y-auto">
-        <div class="m-auto flex-auto flex flex-wrap gap-4 justify-center">
+        <div
+          class="m-auto flex-auto flex flex-wrap gap-4 justify-center px-4 py-8"
+        >
           {#each $allUsers as uid, i}
             <div class="flex-none">
               <Contestant

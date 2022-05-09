@@ -13,7 +13,10 @@
   $: data = getIframeDataFromSubmission($submissionStore)
 </script>
 
-<div class="relative w-[264px] h-[352px] overflow-hidden rounded" on:click>
+<div
+  class="relative w-[264px] h-[352px] overflow-hidden rounded shadow-lg"
+  on:click
+>
   <div class="absolute inset-0 rounded overflow-hidden">
     <div
       class="absolute top-0 left-0 w-[540px] h-[720px] origin-top-left [transform:scale(49%)]  pointer-events-none select-none"
