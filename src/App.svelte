@@ -29,7 +29,7 @@
           class="shadow-lg rounded"
           src={$refImage}
           alt="Template"
-          on:click={() => (viewMode = 'all')}
+          on:dblclick={() => (viewMode = 'all')}
         />
       </div>
 
@@ -61,7 +61,7 @@
         src={$refImage}
         alt="Template"
         width="540"
-        on:click={() => (viewMode = 'stage')}
+        on:dblclick={() => (viewMode = 'stage')}
       />
     </div>
     <div class="flex-auto relative">
