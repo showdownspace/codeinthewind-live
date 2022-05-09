@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-grid {
+  background: url(./src/assets/tailwind-grid.svg) center;
+}

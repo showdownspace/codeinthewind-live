@@ -11,9 +11,12 @@
     inject(html, css)
   }
   function inject(html: string, css: string) {
-    if (iframe) {
-      iframe.contentDocument!.body.innerHTML = html
-      iframe.contentDocument!.querySelector('#cssstyle')!.innerHTML = css
+    const doc = iframe?.contentDocument
+    if (doc) {
+      const body = doc.querySelector('#htmlbody')
+      if (body) body.innerHTML = html
+      const style = doc.querySelector('#cssstyle')
+      if (style) style.innerHTML = css
     }
   }
 

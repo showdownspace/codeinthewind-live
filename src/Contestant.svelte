@@ -2,7 +2,7 @@
   import PreviewIframe from './PreviewIframe.svelte'
   import { getIframeDataFromSubmission } from './PreviewIframeContent'
 
-  import { contestantPresence, contestantSubmission, Submission } from './store'
+  import { contestantPresence, contestantSubmission } from './store'
   export let uid: string
   export let index: number
 

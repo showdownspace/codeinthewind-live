@@ -10,7 +10,9 @@ import { database } from './firebase'
 
 const roomRef = ref(database, 'rooms/citw')
 const configRef = child(roomRef, 'config')
+const refImageRef = child(roomRef, 'refImage')
 const stageRef = child(configRef, 'stage')
+const allProfilesRef = child(roomRef, 'profiles')
 
 function firebaseStore<T>(
   ref: DatabaseReference,
@@ -38,6 +40,18 @@ export const stage = firebaseStore(
     const users: string[] = []
     snapshot.forEach((item) => {
       users.push(item.val())
+    })
+    return users
+  },
+  [],
+)
+
+export const allUsers = firebaseStore(
+  allProfilesRef,
+  (snapshot) => {
+    const users: string[] = []
+    snapshot.forEach((item) => {
+      users.push(item.key!)
     })
     return users
   },
@@ -103,4 +117,30 @@ export const contestantPresence = memoize(
       },
     }
   },
+)
+
+export interface ContestantProfile {
+  name?: string
+}
+
+export const contestantProfile = memoize(
+  (uid: string): SvelteStore<ContestantProfile> => {
+    const profileRef = child(roomRef, `profiles/${uid}`)
+    return firebaseStore<ContestantProfile>(
+      profileRef,
+      (snapshot) => {
+        const name = snapshot.child('name').val()
+        return { name: name || undefined }
+      },
+      {},
+    )
+  },
+)
+
+export const refImage = firebaseStore(
+  refImageRef,
+  (snapshot): string => {
+    return snapshot.val() || 'https://via.placeholder.com/540x720'
+  },
+  'https://via.placeholder.com/540x720',
 )
