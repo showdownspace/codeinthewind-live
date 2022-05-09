@@ -23,12 +23,12 @@
 </script>
 
 <div
-  class="absolute z-10 inset-0 overflow-y-auto"
+  class="absolute z-10 inset-0 overflow-y-auto bg-gradient-to-b from-slate-800 to-slate-700 flex flex-col justify-center"
   aria-labelledby="modal-title"
   role="dialog"
   aria-modal="true"
 >
-  <div class="bg-gradient-to-b from-slate-800 to-slate-700 p-8 w-full h-full">
+  <div class="p-8">
     <h1 class="text-5xl text-center">
       Spectating <button on:click={toggleName}>
         <strong>{name}</strong>
@@ -45,12 +45,12 @@
     <div class="flex justify-center mt-4 p-8">
       <div class="bg-black flex-auto relative">
         <div class="absolute inset-0 overflow-auto p-8">
-          <pre wrap="wrap">{@html Prism.highlight(
+          <pre wrap="wrap" class="break-words">{@html Prism.highlight(
               $submissionStore?.html || '(No data received)',
               Prism.languages.html,
             )}</pre>
           <div class="h-px bg-gray-700 my-12" />
-          <pre wrap="wrap">{@html Prism.highlight(
+          <pre wrap="wrap" class="break-words">{@html Prism.highlight(
               $submissionStore?.css || '',
               Prism.languages.css,
             )}</pre>

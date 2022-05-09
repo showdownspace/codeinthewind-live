@@ -65,7 +65,7 @@
       />
     </div>
     <div class="flex-auto relative">
-      <div class="absolute inset-0 flex overflow-x-hidden overflow-y-auto">
+      <div class="absolute inset-0 flex overflow-x-hidden overflow-y-[overlay]">
         <div
           class="m-auto flex-auto flex flex-wrap gap-4 justify-center px-4 py-8"
         >
