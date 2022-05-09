@@ -5,7 +5,7 @@
   import { getIframeDataFromSubmission } from './PreviewIframeContent'
   import PreviewIframe from './PreviewIframe.svelte'
   export let uid: string
-  export let index: number
+  export let index: number | undefined = undefined
   let revealName = false
   const dispatch = createEventDispatcher()
   $: submissionStore = contestantSubmission(uid)
@@ -15,7 +15,9 @@
   const toggleName = () => {
     revealName = !revealName
   }
-  $: name = (revealName && $profileStore.name) || `Contestant ${index + 1}`
+  $: name =
+    (revealName && $profileStore.name) ||
+    (index != undefined ? `Contestant ${index + 1}` : 'User')
 </script>
 
 <div

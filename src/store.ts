@@ -10,7 +10,6 @@ import { database } from './firebase'
 
 const roomRef = ref(database, 'rooms/citw')
 const configRef = child(roomRef, 'config')
-const refImageRef = child(roomRef, 'refImage')
 const stageRef = child(configRef, 'stage')
 const allProfilesRef = child(roomRef, 'profiles')
 
@@ -138,9 +137,17 @@ export const contestantProfile = memoize(
 )
 
 export const refImage = firebaseStore(
-  refImageRef,
+  child(configRef, 'refImage'),
   (snapshot): string => {
     return snapshot.val() || 'https://via.placeholder.com/540x720'
   },
   'https://via.placeholder.com/540x720',
+)
+
+export const namesRevealed = firebaseStore(
+  child(configRef, 'namesRevealed'),
+  (snapshot): boolean => {
+    return !!snapshot.val()
+  },
+  false,
 )

@@ -2,15 +2,25 @@
   import PreviewIframe from './PreviewIframe.svelte'
   import { getIframeDataFromSubmission } from './PreviewIframeContent'
 
-  import { contestantPresence, contestantSubmission } from './store'
+  import {
+    contestantPresence,
+    contestantProfile,
+    contestantSubmission,
+  } from './store'
   export let uid: string
-  export let index: number
+  export let index: number | undefined = undefined
+  export let namesRevealed: boolean = false
+  export let namePrefix: string = 'Contestant'
 
   $: submissionStore = contestantSubmission(uid)
   $: presenceStore = contestantPresence(uid)
 
   $: presence = $presenceStore
   $: data = getIframeDataFromSubmission($submissionStore)
+  $: profileStore = contestantProfile(uid)
+  $: name =
+    (namesRevealed && $profileStore.name) ||
+    (index != undefined ? `${namePrefix} ${index + 1}` : 'User')
 </script>
 
 <div
@@ -32,6 +42,6 @@
         ? 'bg-red-500'
         : 'bg-green-400'} rounded-full"
     />
-    Contestant #{index + 1}
+    {name}
   </div>
 </div>

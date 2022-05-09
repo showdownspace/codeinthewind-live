@@ -3,12 +3,12 @@
   import { fade } from 'svelte/transition'
   import Contestant from './Contestant.svelte'
   import Modal from './Modal.svelte'
-  import { stage, allUsers, refImage } from './store'
+  import { stage, allUsers, refImage, namesRevealed } from './store'
   let modalData: { uid: string; index: number } | null = null
   let viewMode: 'stage' | 'all' = 'stage'
   $: uids = $stage || []
 
-  function displayContestantModal(uid: string, index: number) {
+  function displayContestantModal(uid: string, index?: number) {
     modalData = { uid, index }
   }
 
@@ -39,6 +39,7 @@
             {uid}
             index={i}
             on:click={() => displayContestantModal(uid, i)}
+            namesRevealed={$namesRevealed}
           />
         </div>
       {/each}
@@ -72,8 +73,9 @@
             <div class="flex-none">
               <Contestant
                 {uid}
+                on:click={() => displayContestantModal(uid)}
                 index={i}
-                on:click={() => displayContestantModal(uid, i)}
+                namePrefix="User"
               />
             </div>
           {/each}
