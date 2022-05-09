@@ -12,8 +12,8 @@
   }
   function inject(html: string, css: string) {
     if (iframe) {
-      iframe.contentDocument.body.innerHTML = html
-      iframe.contentDocument.querySelector('#cssstyle').innerHTML = css
+      iframe.contentDocument!.body.innerHTML = html
+      iframe.contentDocument!.querySelector('#cssstyle')!.innerHTML = css
     }
   }
 
