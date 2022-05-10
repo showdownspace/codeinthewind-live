@@ -7,6 +7,12 @@
   let modalData: { uid: string; index: number } | null = null
   let viewMode: 'stage' | 'all' = 'stage'
   $: uids = $stage || []
+  $: nonContestants = exclude($allUsers, uids)
+
+  function exclude(ids: string[], excludeIds: string) {
+    const excludeIdSet = new Set(excludeIds)
+    return ids.filter((id) => !excludeIdSet.has(id))
+  }
 
   function displayContestantModal(uid: string, index?: number) {
     modalData = { uid, index }
@@ -69,7 +75,7 @@
         <div
           class="m-auto flex-auto flex flex-wrap gap-4 justify-center px-4 py-8"
         >
-          {#each $allUsers as uid, i}
+          {#each nonContestants as uid, i}
             <div class="flex-none">
               <Contestant
                 {uid}
