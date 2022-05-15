@@ -23,7 +23,7 @@
   }
 
   function rest(a: unknown[]) {
-    return new Array(8 - a.length).fill('')
+    return new Array(Math.max(0, 8 - a.length)).fill('')
   }
 </script>
 
